@@ -164,14 +164,8 @@ function findFingerings(
   let positions = findPositions(notes, tuning);
 
   const requiredNotes = notes.slice().filter((n) => !optionalNotes.includes(n));
-  // Restore bass string restriction for closed shapes
-  let maxBassStringIndex = tuning.length - requiredNotes.length;
-  if (!requiredNotes.includes(bass)) {
-    maxBassStringIndex--;
-  }
-  let bassPositions = positions.filter(
-    (p) => areNotesEqual(p.note, bass) && p.stringIndex <= maxBassStringIndex
-  );
+  // Remove maxBassStringIndex restriction for open-position chords
+  let bassPositions = positions.filter((p) => areNotesEqual(p.note, bass));
 
   // If no bass positions found, allow any starting position (for muted bass)
   if (bassPositions.length === 0) {
@@ -190,16 +184,14 @@ function findFingerings(
       let stringPositions = positions.filter(
         (p) => p.stringIndex === stringIndex
       );
-      // Only add open string position if not already present and matches required note
-      if (
-        !stringPositions.some((p) => p.fret === 0) &&
-        requiredNotes.includes(tuning[stringIndex])
-      ) {
-        stringPositions.push({
-          stringIndex,
-          fret: 0,
-          note: tuning[stringIndex],
-        });
+      // Always consider open strings for all notes
+      let openStringPosition = {
+        stringIndex,
+        fret: 0,
+        note: tuning[stringIndex],
+      };
+      if (requiredNotes.includes(openStringPosition.note)) {
+        stringPositions.push(openStringPosition);
       }
 
       fingeringsForThisBass = fingeringsForThisBass.flatMap((fingering) => {
