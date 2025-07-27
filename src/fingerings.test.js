@@ -184,4 +184,8 @@ describe('fingerings', () => {
     expect(pos('Bm', 0)).toBe('x24432');
     expect(pos('Bm', 0, 'G4-C4-E4-A4')).toBe('4222');
   });
+
+  it('sort C7 fingerings correctly', () => {
+    expect(pos('C7', 4)).toBe('x32310');
+  });
 });
