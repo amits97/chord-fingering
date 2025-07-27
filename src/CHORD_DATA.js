@@ -38,7 +38,7 @@ const CHORD_DATA = [
   ['1P 3m 5d', '', 'dim', '° o', 'diminished'],
   ['1P 3m 5d 7d', '', 'dim7', '°7 o7', 'diminished seventh'],
   ['1P 3m 5d 7m', '', 'm7b5', 'ø', 'half-diminished'],
-  ['1P 3M 5P 7m', '', '7', 'dom', 'dominant seventh'],
+  ['1P 3M 5P 7m', '5P', '7', 'dom', 'dominant seventh'],
   ['1P 3M 5P 7m 9M', '5P', '9', '', 'dominant ninth'],
   ['1P 3M 5P 7m 9M 13M', '3M 5P', '13', '', 'dominant thirteenth'],
   ['1P 3M 5P 7m 11A', '3M', '7#11', '7#4', 'lydian dominant seventh'],
