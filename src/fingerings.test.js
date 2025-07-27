@@ -168,4 +168,8 @@ describe('fingerings', () => {
   it('sort Bm fingerings correctly', () => {
     expect(pos('Bm', 0)).toBe('x24432');
   });
+
+  it('sort C7 fingerings correctly', () => {
+    expect(pos('C7', 4)).toBe('x32310');
+  });
 });
