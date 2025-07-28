@@ -170,6 +170,6 @@ describe('fingerings', () => {
   });
 
   it('sort C7 fingerings correctly', () => {
-    expect(pos('C7', 5)).toBe('x32310');
+    expect(pos('C7', 4)).toBe('x32310');
   });
 });

@@ -162,7 +162,8 @@ function findFingerings(notes, optionalNotes = [], bass = notes[0], tuning = 'E-
           return position.fret === 0 ||
             nonZeroFrets.every(fret => Math.abs(position.fret - fret) <= MAX_FRET_DISTANCE);
         });
-        const sensiblePositions = reachablePositions;
+        const sensiblePositions = reachablePositions.filter(p =>
+          tonal.distance(bassPosition.note, p.note)[0] !== '-');
         if (sensiblePositions.length) {
           return sensiblePositions.map(position => [...fingering, position]);
         }
