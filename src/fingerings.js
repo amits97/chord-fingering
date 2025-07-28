@@ -137,7 +137,7 @@ function findFingerings(notes, optionalNotes = [], bass = notes[0], tuning = 'E-
 
   let fingerings = [];
   let positions = findPositions(notes, tuning);
-  let isTuningAscending = JSON.stringify(tuning) === JSON.stringify(originalTuning);
+  let isTuningAscending = tuning.every((note, i) => note === originalTuning[i]);
 
   const requiredNotes = notes.slice().filter(n => !optionalNotes.includes(n));
   let maxBassStringIndex = tuning.length - requiredNotes.length;
@@ -237,18 +237,31 @@ function findFingerings(notes, optionalNotes = [], bass = notes[0], tuning = 'E-
       const easierThan14 = limitDifficulty(a, 14) - limitDifficulty(b, 14);
       const lowerBassFret = getBassFret(a) - getBassFret(b);
 
-      return 0
-        || notLessThanFourStrings
-        || lessMutedStringsInBetween
-        || (isTuningAscending ? 0 : lowerMaxFret)
-        || (isTuningAscending ? 0 : easier)
-        || lessRepeatingNotes
-        || easierThan14
-        || lowerBassFret
-        || easierThan12
-        || (isTuningAscending ? lowerMaxFret : 0)
-        || (isTuningAscending ? easier : 0)
-        || 0;
+      if (isTuningAscending) {
+        // Priority for standard ascending tuning (e.g., Guitar)
+        return 0
+          || notLessThanFourStrings
+          || lessMutedStringsInBetween
+          || lessRepeatingNotes
+          || easierThan14
+          || lowerBassFret
+          || easierThan12
+          || lowerMaxFret
+          || easier
+          || 0;
+      } else {
+        // Priority for non-ascending tuning (e.g., Ukulele)
+        return 0
+          || notLessThanFourStrings
+          || lessMutedStringsInBetween
+          || lowerMaxFret // High priority
+          || easier       // High priority
+          || lessRepeatingNotes
+          || easierThan14
+          || lowerBassFret
+          || easierThan12
+          || 0;
+      }
     });
   return fingerings;
 }
